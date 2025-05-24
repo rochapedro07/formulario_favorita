@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulário de Contato</title>
+    <style>
+        /* Estilos gerais */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            min-height: 100vh;
+            position: relative; /* Needed for absolute positioning of the button */
+        }
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 500px;
+            max-width: 95%;
+            margin-top: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input[type="text"],
+        input[type="tel"],
+        textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            resize: vertical;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+            display: block;
+            text-align: center;
+            text-decoration: none;
+            box-sizing: border-box;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        #mensagem-agradecimento {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: #f9f9f9;
+            display: none;
+        }
+        h1 {
+            text-align: center;
+            color: black;
+            text-shadow: 1px 1px 2px gold,
+                         -1px -1px 2px gold,
+                         1px -1px 2px gold,
+                         -1px 1px 2px gold;
+            margin-bottom: 10px;
+        }
+        h2 {
+            text-align: center;
+            color: black;
+            text-shadow: 1px 1px 2px gold,
+                         -1px -1px 2px gold,
+                         1px -1px 2px gold,
+                         -1px 1px 2px gold;
+            margin-top: 0;
+        }
+        .star-rating {
+            display: flex;
+            flex-direction: row-reverse;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+        .star-rating input {
+            display: none;
+        }
+        .star-rating label {
+            font-size: 30px;
+            padding: 0 5px;
+            cursor: pointer;
+            color: #888;
+        }
+        .star-rating label:hover,
+        .star-rating label:hover ~ label,
+        .star-rating input:checked ~ label {
+            color: gold;
+        }
+        @media (max-width: 600px) {
+            body {
+                align-items: flex-start;
+                height: auto;
+                padding: 10px;
+            }
+            .container {
+                width: 100%;
+                max-width: 100%;
+                margin: 0;
+                padding: 10px;
+            }
+            h1 {
+                font-size: 2em;
+            }
+            h2 {
+                font-size: 1.5em;
+            }
+            .star-rating label {
+                font-size: 25px;
+                padding: 0 3px;
+            }
+        }
+        .avaliacao-inline {
+            display: inline-flex;
+            align-items: center;
+            margin-right: 10px;
+        }
+        .avaliacao-titulo {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        .avaliacao-opcoes {
+            text-align: center;
+        }
+        .error {
+            color: red;
+        }
+        .btn-entrar { /* Style for the "Entrar" button */
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 5px 10px;
+            background-color: #337ab7;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            text-decoration: none;
+        }
+        #password-form {
+            margin-top: 10px;
+            display: none; /* Initially hidden */
+        }
+        #password-form input[type="password"] {
+            width: 150px;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        #password-form button[type="submit"] {
+            background-color: #5cb85c;
+            color: white;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        #password-form button[type="submit"]:hover {
+            background-color: #4cae4c;
+        }
+        .error-message {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+
+    <a href="#" id="btn-entrar" class="btn-entrar">Entrar</a>
+
+    <div id="password-form">
+        <form method="post" action="{{ url_for('resultados') }}">
+            <label for="password">Senha:</label>
+            <input type="password" id="password" name="password" required>
+            <button type="submit">Acessar</button>
+        </form>
+        {% if error %}
+            <p class="error-message">{{ error }}</p>
+        {% endif %}
+    </div>
+
+    <div class="container">
+        <h1>Pizzaria Favorita</h1>
+        <h2>Reclamações ou Sugestões</h2>
+
+        <form method="post">
+
+            <div class="form-group">
+                <label for="nome">Nome:</label>
+                <input type="text" id="nome" name="nome" required class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label for="telefone">Telefone:</label>
+                <input type="tel" id="telefone" name="telefone" required class="form-control">
+            </div>
+
+            <!-- Avaliação do Atendimento -->
+            <div class="form-group">
+                <h3 class="avaliacao-titulo">Avaliação do Atendimento</h3>
+                <div class="avaliacao-opcoes">
+                    <div class="avaliacao-inline">
+                        <input type="radio" id="bom_atendimento" name="avaliacao_atendimento" value="bom" required>
+                        <label for="bom_atendimento">Bom</label>
+                    </div>
+
+                    <div class="avaliacao-inline">
+                        <input type="radio" id="medio_atendimento" name="avaliacao_atendimento" value="medio" required>
+                        <label for="medio_atendimento">Médio</label>
+                    </div>
+
+                    <div class="avaliacao-inline">
+                        <input type="radio" id="ruim_atendimento" name="avaliacao_atendimento" value="ruim" required>
+                        <label for="ruim_atendimento">Ruim</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Avaliação das Pizzas -->
+            <div class="form-group">
+                <h3 class="avaliacao-titulo">Avaliação das Pizzas</h3>
+                <div class="avaliacao-opcoes">
+                    <div class="avaliacao-inline">
+                        <input type="radio" id="bom_pizza" name="avaliacao_pizza" value="bom" required>
+                        <label for="bom_pizza">Bom</label>
+                    </div>
+
+                    <div class="avaliacao-inline">
+                        <input type="radio" id="medio_pizza" name="avaliacao_pizza" value="medio" required>
+                        <label for="medio_pizza">Médio</label>
+                    </div>
+
+                    <div class="avaliacao-inline">
+                        <input type="radio" id="ruim_pizza" name="avaliacao_pizza" value="ruim" required>
+                        <label for="ruim_pizza">Ruim</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Avaliação das Entregas -->
+            <div class="form-group">
+                <h3 class="avaliacao-titulo">Avaliação das Entregas</h3>
+                <div class="avaliacao-opcoes">
+                    <div class="avaliacao-inline">
+                        <input type="radio" id="bom_entrega" name="avaliacao_entrega" value="bom" required>
+                        <label for="bom_entrega">Bom</label>
+                    </div>
+
+                    <div class="avaliacao-inline">
+                        <input type="radio" id="medio_entrega" name="avaliacao_entrega" value="medio" required>
+                        <label for="medio_entrega">Médio</label>
+                    </div>
+
+                    <div class="avaliacao-inline">
+                        <input type="radio" id="ruim_entrega" name="avaliacao_entrega" value="ruim" required>
+                        <label for="ruim_entrega">Ruim</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Avaliação por estrelas -->
+             <div class="form-group">
+                <label>Avaliação Geral:</label>
+                <div class="star-rating">
+                    <input type="radio" id="star5" name="avaliacao_geral" value="5" required/><label for="star5" title="5 stars">☆</label>
+                    <input type="radio" id="star4" name="avaliacao_geral" value="4" required/><label for="star4" title="4 stars">☆</label>
+                    <input type="radio" id="star3" name="avaliacao_geral" value="3" required/><label for="star3" title="3 stars">☆</label>
+                    <input type="radio" id="star2" name="avaliacao_geral" value="2" required/><label for="star2" title="2 stars">☆</label>
+                    <input type="radio" id="star1" name="avaliacao_geral" value="1" required/><label for="star1" title="1 star">☆</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="mensagem">Sugestões/Reclamações (Opcional):</label>
+                <textarea id="mensagem" name="mensagem" rows="4" class="form-control"></textarea>
+            </div>
+
+            <button type="submit" id="submit-button">Enviar</button>
+
+        </form>
+
+        <div id="mensagem-agradecimento" {% if mensagem %}style="display: block;"{% else %}style="display: none;"{% endif %}>
+            Dados enviados. Obrigado pela sua colaboração!
+        </div>
+
+        <div id="media-avaliacoes">
+            Média das avaliações: {{ media_geral }} estrelas
+        </div>
+    </div>
+    <script>
+        document.querySelector('form').addEventListener('submit', function() {
+            document.getElementById('submit-button').disabled = true;
+            document.getElementById('submit-button').innerText = 'Enviando...';
+        });
+
+        document.getElementById('btn-entrar').addEventListener('click', function(event) {
+            event.preventDefault(); // Prevent default link behavior
+            document.getElementById('password-form').style.display = 'block';
+        });
+    </script>
+</body>
+</html>
